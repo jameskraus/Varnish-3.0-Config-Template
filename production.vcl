@@ -139,10 +139,11 @@ sub vcl_recv {
     # A valid discussion could be held on this line: do you really need to cache static files that don't cause load? Only if you have memory left.
     # Sure, there's disk I/O, but chances are your OS will already have these files in their buffers (thus memory).
     # Before you blindly enable this, have a read here: http://mattiasgeniar.be/2012/11/28/stop-caching-static-files/
-    if (req.url ~ "^[^?]*\.(bmp|bz2|css|doc|eot|flv|gif|gz|ico|jpeg|jpg|js|less|pdf|png|rtf|swf|txt|woff|xml)(\?.*)?$") {
-        unset req.http.Cookie;
-        return (lookup);
-    }
+   
+    #if (req.url ~ "^[^?]*\.(bmp|bz2|css|doc|eot|flv|gif|gz|ico|jpeg|jpg|js|less|pdf|png|rtf|swf|txt|woff|xml)(\?.*)?$") {
+    #    unset req.http.Cookie;
+    #    return (lookup);
+    #}
 
     # Send Surrogate-Capability headers to announce ESI support to backend
     set req.http.Surrogate-Capability = "key=ESI/1.0";
@@ -267,14 +268,14 @@ sub vcl_deliver {
     }
 
     # Remove some headers: PHP version
-    unset resp.http.X-Powered-By;
+    #unset resp.http.X-Powered-By;
 
     # Remove some headers: Apache version & OS
-    unset resp.http.Server;
-    unset resp.http.X-Drupal-Cache;
-    unset resp.http.X-Varnish;
-    unset resp.http.Via;
-    unset resp.http.Link;
+    #unset resp.http.Server;
+    #unset resp.http.X-Drupal-Cache;
+    #unset resp.http.X-Varnish;
+    #unset resp.http.Via;
+    #unset resp.http.Link;
 
     return (deliver);
 }

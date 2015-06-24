@@ -3,5 +3,12 @@ if (req.url ~ "(wp-login|wp-admin|wp-signup|wp-comments-post.php|wp-cron.php|adm
     return (pass);
 }
 
-unset req.http.cookie;
+#Supposed to retrieve uncached page from backend if user is logged in
+if ( req.http.cookie ~ "wordpress_logged_in" ) {
+    return (pass);
+} else {
+    unset req.http.cookie;
+}
+
+
 return (lookup);
